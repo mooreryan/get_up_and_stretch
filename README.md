@@ -13,6 +13,14 @@ get_up_and_stretch <interval in minutes (default: 5)> <hours to run (default: 1)
 - Use the `&` to put it in the background if you want.
 - The name must be only a-z or A-Z.
 
+### Example
+
+To remind Ryan to get up and stretch every five minutes for an hour...
+
+```
+get_up_and_stretch 5 1 Ryan
+```
+
 ## Dependencies
 
 It needs the `gshuf` program.
