@@ -1,0 +1,93 @@
+#!/bin/bash
+
+# Copyright 2017 Ryan Moore
+# Contact: moorer@udel.edu
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see
+# <http://www.gnu.org/licenses/>.
+
+usage="USAGE: get_up_and_stretch <interval in minutes (default: 5)> <hours to run (default: 1)> <your name (default: Ryan, must =~ [a-zA-Z]+)>"
+
+## Help screen
+if [ "$1" == "-h" ] || [ "$1" == "--help" ] || [ "$1" == "h" ] || [ "$1" == "help" ]
+then
+    (>&2 echo "$usage")
+    exit 1
+fi
+
+## Default args
+if [ -z "$1" ]
+then
+    interval=5
+else
+    interval="$1"
+fi
+
+if [ -z "$2" ]
+then
+    hours_to_run=1
+else
+    hours_to_run="$2"
+fi
+
+if [ -z "$3" ]
+then
+    name="Ryan"
+else
+    name="$3"
+fi
+
+## Check args
+if ! [[ "$interval" =~ ^([0-9]+)$ ]] || ! [[ "$hours_to_run" =~ ^([0-9]+)$ ]] || ! [[ "$name" =~ ^([a-zA-Z]+)$ ]]
+then
+    (>&2 echo "$usage")
+    exit 1
+fi
+
+
+delay_seconds=$(expr "$interval" \* 60)
+seconds_to_run=$(expr "$hours_to_run" \* 60 \* 60)
+
+times_to_repeat=$(expr "$seconds_to_run" \/ "$delay_seconds")
+
+
+echo "$name, I'll remind you to stand up every $interval minutes for $hours_to_run hours."
+
+ary=("Hello $name. Why don't you take a quick break?"
+                "Hello $name. Get up and stretch!"
+                "How's it going $name. Let's stand for a bit."
+                "You've been sitting for too long $name."
+                "You know what would be nice $name? Standing up now."
+                "All this work...why don't you stand up and stretch $name"
+                "Oh my, I've been sitting for so long. Let's stand up $name."
+                "Gee golly bonkers $name! Stand up!"
+                "Wow $name, I've been sitting for too long."
+                "$name, wouldn't it be nice to stand up for a bit?"
+                "Let's take a little break $name."
+                "Okay, you've been sitting long enough $name. Why don't we stand."
+               )
+
+
+for ((i=0; i<"$times_to_repeat"; ++i))
+do
+    greeting=$(for elem in "${ary[@]}"
+               do
+                   echo "$elem"
+               done | gshuf | head -n1)
+
+    voice=$(say -v ? | awk '{print $1,$2}' | grep "en_" | awk '{print $1}' | gshuf | head -n1)
+
+    sleep "$delay_seconds"
+    say -v "$voice" "$greeting"
+done
