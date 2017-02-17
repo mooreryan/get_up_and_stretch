@@ -65,18 +65,18 @@ times_to_repeat=$(expr "$seconds_to_run" \/ "$delay_seconds")
 echo "$name, I'll remind you to stand up every $interval minutes for $hours_to_run hours."
 
 ary=("Hello $name. Why don't you take a quick break?"
-                "Hello $name. Get up and stretch!"
-                "How's it going $name. Let's stand for a bit."
-                "You've been sitting for too long $name."
-                "You know what would be nice $name? Standing up now."
-                "All this work...why don't you stand up and stretch $name"
-                "Oh my, I've been sitting for so long. Let's stand up $name."
-                "Gee golly bonkers $name! Stand up!"
-                "Wow $name, I've been sitting for too long."
-                "$name, wouldn't it be nice to stand up for a bit?"
-                "Let's take a little break $name."
-                "Okay, you've been sitting long enough $name. Why don't we stand."
-               )
+     "Hello $name. Get up and stretch!"
+     "How's it going $name. Let's stand for a bit."
+     "You've been sitting for too long $name."
+     "You know what would be nice $name? Standing up now."
+     "All this work...why don't you stand up and stretch $name"
+     "Oh my, I've been sitting for so long. Let's stand up $name."
+     "Gee golly bonkers $name! Stand up!"
+     "Wow $name, I've been sitting for too long."
+     "$name, wouldn't it be nice to stand up for a bit?"
+     "Let's take a little break $name."
+     "Okay, you've been sitting long enough $name. Why don't we stand."
+    )
 
 
 for ((i=0; i<"$times_to_repeat"; ++i))
